@@ -11,12 +11,12 @@
     </style>
     <script>
       // 1. We create the "Success" sound object globally
-      var chime = new Audio('success.mp3');
+      var chime = new Audio('success.mp3.mp3');
 
       function playSuccess() {
         // 2. Play the sound
         chime.play().catch(function(error) {
-           console.log("Sound failed. Make sure success.mp3 is in your GitHub folder!");
+           console.log("Sound failed. Make sure success.mp3.mp3 is in your GitHub folder!");
         });
 
         // 3. Show the Sovereign confirmation
@@ -50,3 +50,4 @@
     </a-scene>
 </body>
 </html>
+
