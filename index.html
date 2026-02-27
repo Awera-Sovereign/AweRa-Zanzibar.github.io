@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <head>
     <title>AweRa | The Sovereign Experience</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
@@ -8,18 +10,43 @@
         }
     </style>
     <script>
-      // The "Imperial Wake-up" function
-      function playChime() {
-        var audio = document.getElementById('chaching');
-        
-        // This force-starts the audio
-        audio.play().then(() => {
-          console.log("Empire sound active.");
-        }).catch(function(error) {
-          console.log("Browser blocked sound. Click the screen first!");
+      // 1. We create the "Success" sound object globally
+      var chime = new Audio('success.mp3');
+
+      function playSuccess() {
+        // 2. Play the sound
+        chime.play().catch(function(error) {
+           console.log("Sound failed. Make sure success.mp3 is in your GitHub folder!");
         });
 
+        // 3. Show the Sovereign confirmation
         alert('Asset Secured: $464T Vision in Motion');
       }
     </script>
 </head>
+<body>
+    <div id="overlay">
+        <h1>AweRa</h1>
+        <p>Phase 1: Incubation. Target: $1,000 Milestone.</p>
+    </div>
+
+    <a-scene>
+        <a-assets>
+            <img id="lexus" src="goal.png.jpg">
+        </a-assets>
+
+        <a-sky src="#lexus" rotation="0 -90 0"></a-sky> 
+
+        <a-entity cursor="rayOrigin: mouse"></a-entity>
+        
+        <a-box position="0 1.5 -3" 
+               rotation="0 45 0" 
+               color="#D4AF37"
+               animation="property: rotation; to: 0 405 0; loop: true; dur: 10000"
+               onclick="playSuccess()">
+        </a-box>
+        
+        <a-text value="CLICK THE GOLD TO START" position="-1.5 2.8 -2.5" color="white" width="4"></a-text>
+    </a-scene>
+</body>
+</html>
