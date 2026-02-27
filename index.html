@@ -9,6 +9,17 @@
             font-family: 'Garamond', serif; z-index: 10;
         }
     </style>
+    <script>
+      // This function "wakes up" the audio engine as soon as you click anywhere
+      function unlockAudio() {
+        var sound = document.getElementById('chaching');
+        sound.play();
+        sound.pause();
+        sound.currentTime = 0;
+        document.body.removeEventListener('click', unlockAudio);
+      }
+      document.body.addEventListener('click', unlockAudio);
+    </script>
 </head>
 <body>
     <div id="overlay">
@@ -19,7 +30,7 @@
     <a-scene>
         <a-assets>
             <img id="lexus" src="goal.png.jpg">
-            <audio id="chaching" src="success.mp3" preload="auto"></audio>
+            <audio id="chaching" src="success.mp3" preload="auto" crossorigin="anonymous"></audio>
         </a-assets>
 
         <a-sky src="#lexus" rotation="0 -90 0"></a-sky> 
@@ -37,7 +48,3 @@
     </a-scene>
 </body>
 </html>
-
-
-
-
