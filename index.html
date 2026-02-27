@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AweRa | The Sovereign Experience</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <style>
+        #overlay {
+            position: absolute; bottom: 20px; left: 20px; color: #D4AF37;
+            font-family: 'Garamond', serif; z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="overlay">
+        <h1>AweRa</h1>
+        <p>Phase 1: Incubation. Target: $1,000 Milestone.</p>
+    </div>
+
+    <a-scene>
+        <a-sky color="#0a0a2a"></a-sky> 
+        
+        <a-box position="0 1.5 -3" rotation="0 45 0" color="#D4AF37"
+               animation="property: rotation; to: 0 405 0; loop: true; dur: 10000">
+        </a-box>
+        
+        <a-text value="BUILD THE FUTURE" position="-1.2 2.5 -2.5" color="white" width="4"></a-text>
+    </a-scene>
+</body>
+</html>
+
