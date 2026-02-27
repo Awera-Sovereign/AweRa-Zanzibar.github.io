@@ -17,6 +17,24 @@
     </div>
 
     <a-scene>
+        <a-assets>
+            <img id="lexus" src="goal.png.jpg">
+            <audio id="chaching" src="success.mp3" preload="auto"></audio>
+        </a-assets>
+
+        <a-sky src="#lexus" rotation="0 -90 0"></a-sky> 
+
+        <a-entity cursor="rayOrigin: mouse"></a-entity>
+        
+        <a-box position="0 1.5 -3" 
+               rotation="0 45 0" 
+               color="#D4AF37"
+               animation="property: rotation; to: 0 405 0; loop: true; dur: 10000"
+               onclick="document.getElementById('chaching').play(); console.log('Asset Secured!');">
+        </a-box>
+        
+        <a-text value="CLICK THE GOLD TO START" position="-1.5 2.8 -2.5" color="white" width="4"></a-text>
+    </a-scene>
         <a-sky src="goal.png.jpg" rotation="0 -90 0"></a-sky> 
         
         <a-box position="0 1.5 -3" rotation="0 45 0" color="#D4AF37"
@@ -27,5 +45,6 @@
     </a-scene>
 </body>
 </html>
+
 
 
