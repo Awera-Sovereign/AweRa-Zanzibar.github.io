@@ -14,31 +14,49 @@
             cursor: pointer; font-size: 16px; z-index: 100; font-weight: bold;
             border-radius: 5px;
         }
+        #book-button {
+            display: none; /* Hidden by default */
+            position: absolute; bottom: 80px; left: 20px;
+            padding: 15px 30px; background: #D4AF37; color: black; border: none;
+            cursor: pointer; font-size: 18px; z-index: 100; font-weight: bold;
+            border-radius: 50px; box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+        }
     </style>
     <script>
-      // The Core Imperial Logic
       function handleInteraction() {
         var audio = document.getElementById('chaching');
         var sky = document.getElementById('main-sky');
+        var bookBtn = document.getElementById('book-button');
+        var current = sky.getAttribute('src');
         
-        // 1. Play the Chime (Success Sound)
         audio.currentTime = 0;
         audio.play();
 
-        // 2. Toggle the Reality
-        var current = sky.getAttribute('src');
         if (current === '#lexus') {
-          sky.setAttribute('src', '#empire');
-          console.log("Entering Empire Estate...");
+          sky.setAttribute('src', '#empire'); // Sultan Mode
+          bookBtn.style.display = 'block';
+          bookBtn.innerText = 'BOOK SULTAN ESTATE';
+        } else if (current === '#empire') {
+          sky.setAttribute('src', '#ocean'); // Navigator Mode
+          bookBtn.style.display = 'block';
+          bookBtn.innerText = 'BOOK NAVIGATOR DHOW';
         } else {
-          sky.setAttribute('src', '#lexus');
-          console.log("Returning to Pilot Seat...");
+          sky.setAttribute('src', '#lexus'); // Back to Pilot
+          bookBtn.style.display = 'none';
         }
+      }
+
+      function openBooking() {
+          // This will eventually be your Expedia or Booking.com link
+          alert('Redirecting to AweRa Booking Engine...');
+          window.location.href = "https://www.expedia.com"; 
       }
     </script>
 </head>
 <body>
     <button id="unlock-button" onclick="document.getElementById('chaching').play(); this.style.display='none';">ACTIVATE EMPIRE SENSES</button>
+    
+    <button id="book-button" onclick="openBooking()">BOOK NOW</button>
 
     <div id="overlay">
         <h1>AweRa</h1>
@@ -49,6 +67,7 @@
         <a-assets>
             <img id="lexus" src="goal.png.jpg">
             <img id="empire" src="empire.jpg">
+            <img id="ocean" src="ocean.jpg">
             <audio id="chaching" src="success.mp3" preload="auto"></audio>
         </a-assets>
 
@@ -63,7 +82,7 @@
                onclick="handleInteraction()">
         </a-box>
         
-        <a-text value="CLICK THE GOLD TO TOGGLE REALITY" position="-1.8 2.8 -2.5" color="white" width="4"></a-text>
+        <a-text value="TAP GOLD TO TRAVEL PATHS" position="-1.5 2.8 -2.5" color="white" width="4"></a-text>
     </a-scene>
 </body>
 </html>
