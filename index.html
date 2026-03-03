@@ -43,3 +43,16 @@
     </a-scene>
 </body>
 </html>
+function toggleReality() {
+        var sky = document.querySelector('a-sky');
+        var currentSrc = sky.getAttribute('src');
+        
+        if (currentSrc === '#lexus') {
+          sky.setAttribute('src', '#empire');
+          alert('Welcome to the AweRa Estate.');
+        } else {
+          sky.setAttribute('src', '#lexus');
+          alert('Back to the Pilot Seat.');
+        }
+        document.getElementById('chaching').play();
+      }
