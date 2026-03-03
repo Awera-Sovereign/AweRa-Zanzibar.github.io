@@ -6,53 +6,64 @@
     <style>
         #overlay {
             position: absolute; bottom: 20px; left: 20px; color: #D4AF37;
-            font-family: 'Garamond', serif; z-index: 10;
+            font-family: 'Garamond', serif; z-index: 10; pointer-events: none;
         }
         #unlock-button {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            padding: 20px; background: #D4AF37; color: black; border: none;
-            cursor: pointer; font-size: 20px; z-index: 100; font-weight: bold;
+            position: absolute; top: 20px; right: 20px;
+            padding: 12px 24px; background: #D4AF37; color: black; border: none;
+            cursor: pointer; font-size: 16px; z-index: 100; font-weight: bold;
+            border-radius: 5px;
         }
     </style>
+    <script>
+      // The Core Imperial Logic
+      function handleInteraction() {
+        var audio = document.getElementById('chaching');
+        var sky = document.getElementById('main-sky');
+        
+        // 1. Play the Chime (Success Sound)
+        audio.currentTime = 0;
+        audio.play();
+
+        // 2. Toggle the Reality
+        var current = sky.getAttribute('src');
+        if (current === '#lexus') {
+          sky.setAttribute('src', '#empire');
+          console.log("Entering Empire Estate...");
+        } else {
+          sky.setAttribute('src', '#lexus');
+          console.log("Returning to Pilot Seat...");
+        }
+      }
+    </script>
 </head>
 <body>
-    <button id="unlock-button" onclick="document.getElementById('chaching').play(); this.style.display='none';">ENTER AWERA EMPIRE</button>
+    <button id="unlock-button" onclick="document.getElementById('chaching').play(); this.style.display='none';">ACTIVATE EMPIRE SENSES</button>
 
     <div id="overlay">
         <h1>AweRa</h1>
-        <p>Phase 1: Incubation. Target: $1,000 Milestone.</p>
+        <p>Phase 1: Incubation. Target: $464 Trillion Vision.</p>
     </div>
 
     <a-scene>
         <a-assets>
             <img id="lexus" src="goal.png.jpg">
+            <img id="empire" src="empire.jpg">
             <audio id="chaching" src="success.mp3" preload="auto"></audio>
         </a-assets>
 
-        <a-sky src="#lexus" rotation="0 -90 0"></a-sky> 
+        <a-sky id="main-sky" src="#lexus" rotation="0 -90 0"></a-sky> 
+
         <a-entity cursor="rayOrigin: mouse"></a-entity>
         
         <a-box position="0 1.5 -3" 
                rotation="0 45 0" 
                color="#D4AF37"
                animation="property: rotation; to: 0 405 0; loop: true; dur: 10000"
-               onclick="document.getElementById('chaching').currentTime = 0; document.getElementById('chaching').play(); alert('Asset Secured: $464T Vision in Motion');">
+               onclick="handleInteraction()">
         </a-box>
         
-        <a-text value="CLICK THE GOLD TO START" position="-1.5 2.8 -2.5" color="white" width="4"></a-text>
+        <a-text value="CLICK THE GOLD TO TOGGLE REALITY" position="-1.8 2.8 -2.5" color="white" width="4"></a-text>
     </a-scene>
 </body>
 </html>
-function toggleReality() {
-        var sky = document.querySelector('a-sky');
-        var currentSrc = sky.getAttribute('src');
-        
-        if (currentSrc === '#lexus') {
-          sky.setAttribute('src', '#empire');
-          alert('Welcome to the AweRa Estate.');
-        } else {
-          sky.setAttribute('src', '#lexus');
-          alert('Back to the Pilot Seat.');
-        }
-        document.getElementById('chaching').play();
-      }
