@@ -1,67 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AweRa | The Sovereign Experience</title>
+    <title>AweRa | Zanzibar Sovereign Portal</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <style>
-        #overlay {
-            position: absolute; bottom: 20px; left: 20px; color: #D4AF37;
-            font-family: 'Garamond', serif; z-index: 10; pointer-events: none;
+        /* Galaxy-Class Cinematic Intro */
+        #intro-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+            z-index: 9999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: opacity 2.5s;
         }
-        #unlock-button {
-            position: absolute; top: 20px; right: 20px;
-            padding: 12px 24px; background: #D4AF37; color: black; border: none;
-            cursor: pointer; font-size: 16px; z-index: 100; font-weight: bold;
-            border-radius: 5px;
+        #intro-logo {
+            color: #D4AF37; font-family: 'Garamond', serif; font-size: 60px;
+            letter-spacing: 15px; animation: breathe 4s infinite ease-in-out;
         }
-        #book-button {
-            display: none; /* Hidden by default */
-            position: absolute; bottom: 80px; left: 20px;
-            padding: 15px 30px; background: #D4AF37; color: black; border: none;
-            cursor: pointer; font-size: 18px; z-index: 100; font-weight: bold;
-            border-radius: 50px; box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+        #activate-btn {
+            margin-top: 40px; background: none; border: 1px solid #D4AF37;
+            color: #D4AF37; padding: 15px 40px; cursor: pointer;
+            font-size: 14px; letter-spacing: 4px; transition: 0.5s;
+        }
+        #activate-btn:hover { background: #D4AF37; color: black; box-shadow: 0 0 20px #D4AF37; }
+
+        /* User HUD (Heads-Up Display) */
+        #hud {
+            position: absolute; top: 20px; left: 20px; color: #D4AF37;
+            font-family: 'Garamond', serif; z-index: 100; pointer-events: none;
+        }
+        #inventory-display {
+            position: absolute; bottom: 20px; right: 20px; color: white;
+            font-family: sans-serif; font-size: 12px; z-index: 100; background: rgba(0,0,0,0.5); padding: 10px;
+        }
+
+        @keyframes breathe {
+            0% { opacity: 0.2; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0.2; transform: scale(0.98); }
         }
     </style>
-    <script>
-      function handleInteraction() {
-        var audio = document.getElementById('chaching');
-        var sky = document.getElementById('main-sky');
-        var bookBtn = document.getElementById('book-button');
-        var current = sky.getAttribute('src');
-        
-        audio.currentTime = 0;
-        audio.play();
-
-        if (current === '#lexus') {
-          sky.setAttribute('src', '#empire'); // Sultan Mode
-          bookBtn.style.display = 'block';
-          bookBtn.innerText = 'BOOK SULTAN ESTATE';
-        } else if (current === '#empire') {
-          sky.setAttribute('src', '#ocean'); // Navigator Mode
-          bookBtn.style.display = 'block';
-          bookBtn.innerText = 'BOOK NAVIGATOR DHOW';
-        } else {
-          sky.setAttribute('src', '#lexus'); // Back to Pilot
-          bookBtn.style.display = 'none';
-        }
-      }
-
-      function openBooking() {
-          // This will eventually be your Expedia or Booking.com link
-          alert('Redirecting to AweRa Booking Engine...');
-          window.location.href = "https://www.expedia.com"; 
-      }
-    </script>
 </head>
 <body>
-    <button id="unlock-button" onclick="document.getElementById('chaching').play(); this.style.display='none';">ACTIVATE EMPIRE SENSES</button>
-    
-    <button id="book-button" onclick="openBooking()">BOOK NOW</button>
 
-    <div id="overlay">
-        <h1>AweRa</h1>
-        <p>Phase 1: Incubation. Target: $464 Trillion Vision.</p>
+    <div id="intro-screen">
+        <h1 id="intro-logo">AWERA</h1>
+        <p style="color:white; letter-spacing:5px; font-size:10px;">ZANZIBAR SOVEREIGN GATEWAY</p>
+        <button id="activate-btn" onclick="activatePortal()">INITIALIZE VISION</button>
     </div>
+
+    <div id="hud">
+        <h2 style="margin:0;">AWERA EMPIRE</h2>
+        <p id="status">STATUS: PILOT</p>
+    </div>
+
+    <div id="inventory-display">WARDROBE: <span id="items">Basic T-Shirt</span></div>
 
     <a-scene>
         <a-assets>
@@ -71,18 +62,63 @@
             <audio id="chaching" src="success.mp3" preload="auto"></audio>
         </a-assets>
 
-        <a-sky id="main-sky" src="#lexus" rotation="0 -90 0"></a-sky> 
+        <a-sky id="main-sky" src="#lexus" rotation="0 -90 0" animation="property: rotation; to: 0 270 0; dur: 100000; loop: true; easing: linear;"></a-sky> 
 
         <a-entity cursor="rayOrigin: mouse"></a-entity>
         
-        <a-box position="0 1.5 -3" 
-               rotation="0 45 0" 
-               color="#D4AF37"
-               animation="property: rotation; to: 0 405 0; loop: true; dur: 10000"
-               onclick="handleInteraction()">
+        <a-box id="portal-trigger" position="0 1.5 -4" 
+               rotation="0 45 0" color="#D4AF37"
+               animation="property: rotation; to: 0 405 0; loop: true; dur: 8000"
+               onclick="handlePortal()">
         </a-box>
+
+        <a-entity id="loot-chest" position="2.5 0.2 -3" onclick="unlockLoot()">
+            <a-box color="#4b3621" width="0.8" height="0.5" depth="0.5"></a-box>
+            <a-text value="OPEN CHEST" position="-0.4 0.7 0" color="#D4AF37" scale="0.6 0.6 0.6"></a-text>
+        </a-entity>
         
-        <a-text value="TAP GOLD TO TRAVEL PATHS" position="-1.5 2.8 -2.5" color="white" width="4"></a-text>
+        <a-text value="GAZE UPON YOUR FUTURE" position="-1.5 3 -3" color="white" width="4"></a-text>
     </a-scene>
+
+    <script>
+      let inventory = ["Basic T-Shirt"];
+      
+      function activatePortal() {
+        document.getElementById('chaching').play();
+        document.getElementById('intro-screen').style.opacity = '0';
+        setTimeout(() => { document.getElementById('intro-screen').style.display = 'none'; }, 2500);
+      }
+
+      function handlePortal() {
+        const sky = document.getElementById('main-sky');
+        const status = document.getElementById('status');
+        const audio = document.getElementById('chaching');
+        const current = sky.getAttribute('src');
+        
+        audio.currentTime = 0;
+        audio.play();
+
+        if (current === '#lexus') {
+          sky.setAttribute('src', '#empire');
+          status.innerText = "STATUS: SULTAN";
+        } else if (current === '#empire') {
+          sky.setAttribute('src', '#ocean');
+          status.innerText = "STATUS: NAVIGATOR";
+        } else {
+          sky.setAttribute('src', '#lexus');
+          status.innerText = "STATUS: PILOT";
+        }
+      }
+
+      function unlockLoot() {
+        const items = ["Sultan Signet Ring", "Navigator Compass", "Zanzibar Silk Robe", "Golden Key"];
+        const win = items[Math.floor(Math.random() * items.length)];
+        document.getElementById('chaching').play();
+        alert("LOOT UNLOCKED: " + win);
+        inventory.push(win);
+        document.getElementById('items').innerText = inventory.join(", ");
+        document.getElementById('loot-chest').setAttribute('visible', 'false');
+      }
+    </script>
 </body>
 </html>
